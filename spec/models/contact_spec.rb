@@ -6,67 +6,58 @@ describe Contact do
   end
 
   it "is valid with a firstname, lastname and email" do
-    contact = Contact.new(
-      firstname: 'Aaron',
-      lastname: 'Sumner',
-      email: 'tester@example.com')
+    contact = FactoryGirl.build(:contact)
     expect(contact).to be_valid
   end
 
   it "is invalid without a firstname" do
-    contact = Contact.new(firstname: nil)
+    contact = FactoryGirl.build(:contact, firstname: nil)
     contact.valid?
     expect(contact.errors[:firstname]).to include("can't be blank")
   end
 
   it "is invalid without a lastname" do
-    contact = Contact.new(lastname: nil)
+    contact = FactoryGirl.build(:contact, lastname: nil)
     expect(contact).not_to be_valid
   end
 
   it "is invalid without an email address" do
-    contact = Contact.new(email: nil)
+    contact = FactoryGirl.build(:contact, email: nil)
     expect(contact).not_to be_valid
   end
 
   it "is invalid with a duplicate email address" do
-    Contact.create(
-      firstname: 'Joe', lastname: 'Tester', email: 'tester@example.com'
-    )
-    contact = Contact.new(
-      firstname: 'Jane', lastname: 'Tester', email: 'tester@example.com'
-    )
+    FactoryGirl.create(:contact, email: 'aaron@example.com')
+    contact = FactoryGirl.build(:contact, email: 'aaron@example.com')
     contact.valid?
     expect(contact.errors[:email]).to include("has already been taken")
   end
 
   # Testing instance methods
   it "returns a contact's full name as a string" do
-    contact = Contact.new(
-      firstname: 'Aaron',
-      lastname: 'Sumner')
-    expect(contact.name).to eq('Aaron Sumner')
+    contact = FactoryGirl.build(:contact,
+    firstname: "Jane",
+    lastname: "Smith"
+    )
+    expect(contact.name).to eq('Jane Smith')
   end
 
   # Testing class methods and scopes
   describe "filter last name by letter" do
     before :each do
-      @smith = Contact.create(
-        firstname: 'John',
-        lastname: 'Smith',
-        email: 'jsmith@example.com'
+      @smith = FactoryGirl.create(:contact,
+      firstname: "Jane",
+      lastname: "Smith"
       )
 
-      @jones = Contact.create(
-        firstname: 'Tim',
-        lastname: 'Jones',
-        email: 'jjones@example.com'
+      @jones = FactoryGirl.create(:contact,
+      firstname: "Tim",
+      lastname: "Jones"
       )
 
-      @johnson = Contact.create(
-        firstname: 'John',
-        lastname: 'Johnson',
-        email: 'jjohnson@example.com'
+      @johnson = FactoryGirl.create(:contact,
+      firstname: "John",
+      lastname: "Johnson"
       )
     end
 
