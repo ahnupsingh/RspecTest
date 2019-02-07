@@ -1,0 +1,64 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/home/anup/work/RspecTest/app/models/contact.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        2,
+        null,
+        null,
+        null
+      ],
+      "/home/anup/work/RspecTest/app/models/application_record.rb": [
+        1,
+        1,
+        null
+      ],
+      "/home/anup/work/RspecTest/spec/models/phone_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/home/anup/work/RspecTest/app/models/phone.rb": [
+        1,
+        1,
+        null,
+        1,
+        null
+      ]
+    },
+    "timestamp": 1549557667
+  }
+}
