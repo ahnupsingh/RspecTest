@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Contact do
+  it "has a valid factory" do
+    expect(FactoryGirl.build(:contact)).to be_valid
+  end
+
   it "is valid with a firstname, lastname and email" do
     contact = Contact.new(
       firstname: 'Aaron',
@@ -45,41 +49,37 @@ describe Contact do
   end
 
   # Testing class methods and scopes
-  it "returns a sorted array of results that match" do
-    smith = Contact.create(
-      firstname: 'John',
-      lastname: 'Smith',
-      email: 'jsmith@example.com'
-    )
-    jones = Contact.create(
-      firstname: 'Tim',
-      lastname: 'Jones',
-      email: 'jjones@example.com'
-    )
-    johnson = Contact.create(
-      firstname: 'John',
-      lastname: 'Johnson',
-      email: 'jjohnson@example.com'
-    )
-    expect(Contact.by_letter("J")).to eq ['Johnson','Jones']
-  end
+  describe "filter last name by letter" do
+    before :each do
+      @smith = Contact.create(
+        firstname: 'John',
+        lastname: 'Smith',
+        email: 'jsmith@example.com'
+      )
 
-  it "omits results that do not match" do
-    smith = Contact.create(
-      firstname: 'John',
-      lastname: 'Smith',
-      email: 'jsmith@example.com'
-    )
-    jones = Contact.create(
-      firstname: 'Tim',
-      lastname: 'Jones',
-      email: 'jjones@example.com'
-    )
-    johnson = Contact.create(
-      firstname: 'John',
-      lastname: 'Johnson',
-      email: 'jjohnson@example.com'
-    )
-    expect(Contact.by_letter("J")).not_to include "Smith"
+      @jones = Contact.create(
+        firstname: 'Tim',
+        lastname: 'Jones',
+        email: 'jjones@example.com'
+      )
+
+      @johnson = Contact.create(
+        firstname: 'John',
+        lastname: 'Johnson',
+        email: 'jjohnson@example.com'
+      )
+    end
+
+    context "matching letters" do
+      it "returns a sorted array of results that match" do
+        expect(Contact.by_letter("J")).to eq ['Johnson','Jones']
+      end
+    end
+
+    context "non-matching letters" do
+      it "omits results that do not match" do
+        expect(Contact.by_letter("J")).not_to include "Smith"
+      end
+    end
   end
 end
